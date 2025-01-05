@@ -38,7 +38,7 @@ const Register = () => {
 
   return (
     <div className=" flex items-center justify-center p-5">
-      <form className='p-5 w-[760px] p-2 flex flex-col mt-24  shadow-md'>
+      <form className='p-5 w-[760px] p-2 flex flex-col mt-32 gap-5   shadow-md'>
       <h1 className="text-2xl font-bold mb-4 text-[#616a6b]">Register</h1>
       <select
         onChange={(e) => setRole(e.target.value)}

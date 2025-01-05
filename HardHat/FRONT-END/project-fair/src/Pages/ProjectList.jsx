@@ -71,7 +71,7 @@ const ProjectList = () => {
 
   return (
     <div className="p-5">
-      <h1 className="text-2xl font-bold">Project List</h1>
+      <h1 className="text-4xl font-bold my-12 text-center text-[#283747]">Project List</h1>
       {message && <p className="text-green-500">{message}</p>}
       {projects.length === 0 ? (
         <p>No projects available</p>
@@ -91,9 +91,9 @@ const ProjectList = () => {
                   className="text-blue-500 underline"
                   download
                 >
-                  Download File
+                  Download File <i className="fa-duotone fa-solid fa-download fa-fade text-xl text-black cursor-pointer"></i>
+
                 </a>
-                <i className="fa-duotone fa-solid fa-download fa-fade text-xl"></i>
                  </div>
             
                 
