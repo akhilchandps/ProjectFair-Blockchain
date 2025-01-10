@@ -1,4 +1,4 @@
-Here’s the updated description for **Project Fair Blockchain**:  
+Here’s the updated version for **Project Fair Blockchain** without the backend:  
 
 ---
 
@@ -9,8 +9,6 @@ Project Fair Blockchain simplifies the process of presenting and managing innova
 
 ## 🛠️ Built With  
 - **Frontend**: React, HTML, CSS, JavaScript  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB  
 - **Blockchain Framework**: Solidity, Ethereum  
 
 ## 📂 Features  
@@ -36,9 +34,9 @@ To run the project locally, follow these steps:
    ```bash  
    git clone https://github.com/akhilchandps/Project-Fair-Blockchain.git  
    ```  
-2. Navigate to the frontend directory:  
+2. Navigate to the project directory:  
    ```bash  
-   cd frontend  
+   cd project-fair-blockchain  
    ```  
 3. Install the dependencies:  
    ```bash  
@@ -46,25 +44,10 @@ To run the project locally, follow these steps:
    ```  
 4. Start the development server:  
    ```bash  
-   npm start  
+   npm run dev  
    ```  
-5. Open the application in your browser at `http://localhost:3000`.  
-
-### 🔧 Backend Setup  
-1. Navigate to the backend directory:  
-   ```bash  
-   cd backend  
-   ```  
-2. Install the dependencies:  
-   ```bash  
-   npm install  
-   ```  
-3. Start the backend server:  
-   ```bash  
-   npm start  
-   ```  
-4. The backend will run at `http://localhost:5000`.  
+5. Open the application in your browser at `http://localhost:5173`.  
 
 ---  
 
-Let me know if you need more refinements!
+Let me know if you need any further updates!
