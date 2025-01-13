@@ -1,4 +1,4 @@
-Here’s the updated version for **Project Fair Blockchain** without the backend:  
+Here’s the updated version of your **Project Fair Blockchain** documentation with the project video link included:
 
 ---
 
@@ -48,6 +48,10 @@ To run the project locally, follow these steps:
    ```  
 5. Open the application in your browser at `http://localhost:5173`.  
 
+## 🎥 Project Demo  
+Check out the video walkthrough of the project:  
+[Project Fair Blockchain - Demo](https://youtu.be/cRBCOjka394)  
+
 ---  
 
-Let me know if you need any further updates!
+Let me know if you need further refinements!
