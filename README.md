@@ -1,4 +1,4 @@
-Here’s the updated version of your **Project Fair Blockchain** documentation with the project video link included:
+Here’s the updated version of your **Project Fair Blockchain** documentation with the additional command included:  
 
 ---
 
@@ -48,10 +48,16 @@ To run the project locally, follow these steps:
    ```  
 5. Open the application in your browser at `http://localhost:5173`.  
 
+### 🔗 Deploy Smart Contracts  
+1. Deploy the smart contract using the following Hardhat command:  
+   ```bash  
+   npx hardhat ignition deploy ignition/modules/Project.js --network sepolia  
+   ```  
+
 ## 🎥 Project Demo  
 Check out the video walkthrough of the project:  
 [Project Fair Blockchain - Demo](https://youtu.be/cRBCOjka394)  
 
 ---  
 
-Let me know if you need further refinements!
+Let me know if you'd like any more updates!
