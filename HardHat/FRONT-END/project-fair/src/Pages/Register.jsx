@@ -1,62 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ethers } from 'ethers';
 import ABI from '../assets/ProjectFair.json';
-import address from '../assets/deployed_addresses.json'; // Contract Address
+import address from '../assets/deployed_addresses.json';
 
 const Register = () => {
-  const [role, setRole] = useState('');
-  const [message, setMessage] = useState('');
-
-  async function registerRole(e) {
-    e.preventDefault();
-    if (!role) {
-      alert("Please select a role");
-      return;
-    }
+  const registerAsStudent = async () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(address['ProjectModule#ProjectFair'], ABI.abi, signer);
 
-      await contract.register(parseInt(role)); 
-      setMessage(`Successfully registered as ${role === "1" ? "Student" : "Visitor"}`);
+      const tx = await contract.registerAsStudent();
+      await tx.wait();
+      alert("Successfully registered as Student");
     } catch (error) {
       console.error(error);
-      if (error.message.includes("You are admin")) {
-        alert("Admin cannot register as a role.");
-      } else if (error.message.includes("Already registered")) {
-        alert("You are already registered.");
-      } else if (error.message.includes("Invalid role")) {
-        alert("Please select a valid role.");
-      } else {
-        alert("Registration failed. Please try again.");
-      }
+      alert("Registration failed");
     }
-  }
-  console.log(role);
-  
+  };
+
+  const registerAsVisitor = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(address['ProjectModule#ProjectFair'], ABI.abi, signer);
+
+      const tx = await contract.registerAsVisitor();
+      await tx.wait();
+      alert("Successfully registered as Visitor");
+    } catch (error) {
+      console.error(error);
+      alert("Registration failed");
+    }
+  };
 
   return (
-    <div className=" flex items-center justify-center p-5">
-      <form className='p-5 w-[760px] p-2 flex flex-col mt-32 gap-5   shadow-md'>
-      <h1 className="text-2xl font-bold mb-4 text-[#616a6b]">Register</h1>
-      <select
-        onChange={(e) => setRole(e.target.value)}
-        className="border p-2 mb-4 w-full outline-none"
-      >
-        <option value="">Select Role</option>
-        <option value="1">Student</option>
-        <option value="2">Visitor</option>
-      </select>
+    <div className=" mt-24 flex flex-col items-center">
+      
+      <h1 className="text-2xl font-bold">Register</h1>
+
+      <div className='flex p-5'>
       <button
-        onClick={registerRole}
-        className="bg-black text-white px-4 py-2 rounded"
+        onClick={registerAsStudent}
+        className="bg-blue-500 text-white p-2 rounded-md m-2"
       >
-        Register
+        Register as Student
       </button>
-      {message && <p className="mt-3 text-green-500">{message}</p>}
-      </form>
-     
+      <button
+        onClick={registerAsVisitor}
+        className="bg-green-500 text-white p-2 rounded-md m-2"
+      >
+        Register as Visitor
+      </button>
+      </div>
+  
     </div>
   );
 };

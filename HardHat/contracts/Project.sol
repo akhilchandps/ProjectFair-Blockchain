@@ -9,11 +9,10 @@ contract ProjectFair {
         string description;
         string img;
         uint256 votes;
-
     }
 
-    enum Role { None, Student, Visitor }
-    mapping(address => Role) public roles;
+    mapping(address => bool) public students;
+    mapping(address => bool) public visitors;
 
     address public admin;
 
@@ -26,36 +25,52 @@ contract ProjectFair {
         _;
     }
 
-    modifier onlyRole(Role requiredRole) {
-        require(roles[msg.sender] == requiredRole, "Not authorized");
+    modifier onlyStudent() {
+        require(students[msg.sender], "Not authorized as student");
+        _;
+    }
+
+    modifier onlyVisitor() {
+        require(visitors[msg.sender], "Not authorized as visitor");
         _;
     }
 
     Project[] public projects;
 
-    event Registered(address indexed user, Role role);
+    event RegisteredAsStudent(address indexed user);
+    event RegisteredAsVisitor(address indexed user);
 
-    function register(Role role) public {
-        require(msg.sender != admin,"You are admin" ); 
-        require(roles[msg.sender] == Role.None, "Already registered");
-        require(role != Role.None, "Invalid role");
-        roles[msg.sender] = role;
-        emit Registered(msg.sender, role);
+    function registerAsStudent() public {
+        require(msg.sender != admin, "Admin cannot register as student");
+        students[msg.sender] = true;
+        emit RegisteredAsStudent(msg.sender);
     }
 
-    function submitProject(string memory _title,string memory _description, string memory _img) public onlyRole(Role.Student) {
+    function registerAsVisitor() public {
+        require(msg.sender != admin, "Admin cannot register as visitor");
+        visitors[msg.sender] = true;
+        emit RegisteredAsVisitor(msg.sender);
+    }
+
+    function submitProject(
+        string memory _title,
+        string memory _description,
+        string memory _img
+    ) public onlyStudent {
         uint256 projectId = projects.length;
-        projects.push(Project({
-            id: projectId,
-            creator: msg.sender,
-            title: _title,
-            description: _description,
-            img: _img,
-            votes: 0
-        }));
+        projects.push(
+            Project({
+                id: projectId,
+                creator: msg.sender,
+                title: _title,
+                description: _description,
+                img: _img,
+                votes: 0
+            })
+        );
     }
 
-    function vote(uint256 projectId) public onlyRole(Role.Visitor) {
+    function vote(uint256 projectId) public onlyVisitor {
         require(projectId < projects.length, "Invalid project ID");
         projects[projectId].votes += 1;
     }

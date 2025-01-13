@@ -33,9 +33,12 @@ const Home = () => {
       repeat={Infinity}
     />
               </h1>
-            <p className='text-md text-justify	leading-7'>The Project Fair DApp is a decentralized platform where students, innovators, and tech enthusiasts showcase their projects. Visitors and judges can explore, vote, and engage with cutting-edge ideas, while participants compete for recognition and rewards.</p>
+            <p className='text-md text-justify	leading-7'>
+
+The Project Fair DApp is a decentralized platform where students, innovators, and tech enthusiasts showcase their projects. Visitors and judges can explore, vote, and engage with cutting-edge ideas, while participants compete for recognition..</p>
             <div className='flex gap-3' >
-                <button className='bg-orange-500 text-white p-2' onClick={connectToMetamask}>Connect the wallet</button>
+                <button className='bg-orange-500 text-white p-2 ' style={{background: "linear-gradient(to bottom right, #ff9933 0%, #ff6600 100%)"
+}}   onClick={connectToMetamask}>Connect the wallet</button>
                 <img src={img} className='w-[40px] object-contain' alt="" />
             </div>
         </div>

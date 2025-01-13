@@ -6,7 +6,7 @@ import address from '../assets/deployed_addresses.json';
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [message, setMessage] = useState('');
-  const [userRole, setUserRole] = useState(null);
+  const [isVisitor, setIsVisitor] = useState(false);  // Use isVisitor state to check visitor status
 
   useEffect(() => {
     async function fetchProjects() {
@@ -19,7 +19,6 @@ const ProjectList = () => {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const contract = new ethers.Contract(address['ProjectModule#ProjectFair'], ABI.abi, provider);
         
-        // Fetch the projects
         const projectList = await contract.getProjects();
         setProjects(projectList.map((project) => ({
           id: project.id.toString(),
@@ -29,18 +28,13 @@ const ProjectList = () => {
           img: project.img, 
         })));
 
-        // Fetch the user's role
         const signer = await provider.getSigner();
-        console.log(signer);
-        
         const userAddress = await signer.getAddress();
-        console.log(userAddress);
         
-        const role = await contract.roles(userAddress);
-        console.log("role",role);
+        // Check if the user is a visitor
+        const visitorStatus = await contract.visitors(userAddress);
+        setIsVisitor(visitorStatus);  // Set the isVisitor state based on contract check
         
-        
-        setUserRole(parseInt(role)); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -48,6 +42,7 @@ const ProjectList = () => {
 
     fetchProjects();
   }, []);
+  
 
   const handleVote = async (projectId) => {
     try {
@@ -76,36 +71,45 @@ const ProjectList = () => {
       {projects.length === 0 ? (
         <p>No projects available</p>
       ) : (
-        <div className="shadow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, index) => (
-            <div key={index} className="border p-4 flex flex-col gap-3">
+            <div key={index} className="border p-4 flex flex-col gap-3 rounded-md">
               <h2 className="text-xl font-bold">{project.title}</h2>
               <p>{project.description}</p>
               <p className="text-sm text-gray-500">Votes: {project.votes}</p>
               {project.img && (
-                <div className='flex gap-3 '>
+                <div className="flex gap-3 ">
                   <a
-                  href={project.img}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 underline"
-                  download
-                >
-                  Download File <i className="fa-duotone fa-solid fa-download fa-fade text-xl text-black cursor-pointer"></i>
-
-                </a>
-                 </div>
-            
-                
+                    href={project.img}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white underline p-2 rounded-md"
+                    style={{
+                      background: "linear-gradient(to bottom, #33ccff 0%, #3399ff 100%)"
+                    }}
+                    download
+                  >
+                    Download File
+                    <i className="fa-duotone fa-solid fa-download fa-fade text-xl  cursor-pointer text-white"></i>
+                  </a>
+                </div>
               )}
 
-              {userRole === 2 && ( // Check if the user's role is "Visitor"
+              {/* Only show Vote button if the user is a visitor */}
+              {isVisitor && (
                 <button
                   onClick={() => handleVote(project.id)}
-                  className="bg-blue-500 text-white p-2 rounded-md mt-2"
+                  className="text-white p-2 rounded-md mt-2"
+                  style={{
+                    background: "linear-gradient(to bottom right, #ff9933 0%, #ff6600 100%)"
+                  }}
                 >
                   Vote
                 </button>
+              )}
+              {/* Optional message if the user is not a visitor */}
+              {!isVisitor && (
+                <p className="text-sm text-gray-500 mt-2">You must register as a visitor to vote.</p>
               )}
             </div>
           ))}
